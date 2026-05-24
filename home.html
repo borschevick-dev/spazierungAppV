@@ -4,7 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>huh?</title>
-
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
     <link rel="stylesheet" href="./styles.css">
 
     <!-- ШРИФТ -->
@@ -18,20 +23,17 @@
     <style>
         body {
             background-image: url("images/krasavchikNE.jpg");
-
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-
-            margin: 0;
             min-height: 100vh;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
             font-family: 'Rubik', sans-serif;
+            overflow-x: hidden;
+            position: relative;
         }
 
         .container {
@@ -39,135 +41,189 @@
             text-align: center;
         }
 
+        .title {
+            position: relative;
+            display: inline-block;
+            top: -200px;
+            font-size: 70px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            padding: 7px 20px;
+            z-index: 1;
+        }
 
+        .title::after {
+            content: "";
+            position: absolute;
+            inset: -100px -120px -60px -120px;
+            z-index: -1;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.12);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(14px);
+            -webkit-mask-image: radial-gradient(
+                ellipse at center,
+                rgba(0,0,0,1) 10%,
+                rgba(0,0,0,0.9) 30%,
+                rgba(0,0,0,0.5) 55%,
+                rgba(0,0,0,0.3) 75%,
+                transparent 100%
+            );
+        }
 
-.title {
-    position: relative;
-    display: inline-block;
-    top: -200px;
-    left: center;
-    font-size: 70px;
-    font-weight: 800;
-    color: white;
-    text-align: center;
-
-    padding: 7px 20px;
-    z-index: 1;
-}
-
-
-
-/* 🪟 СТЕКЛЯННАЯ ПОДЛОЖКА */
-.title::after {
-    content: "";
-    position: absolute;
-
-    /* 📦 МЕНЬШЕ ВЫСОТА */
-    inset: -100px -120px -60px -120px;
-    z-index: -1;
-
-    border-radius: 10px;
-
-    /* 🪟 ОСНОВНОЕ СТЕКЛО */
-    background: rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-
-    -webkit-mask-image: radial-gradient(
-        ellipse at center,
-        rgba(0,0,0,1) 10%,
-        rgba(0,0,0,0.9) 30%,
-        rgba(0,0,0,0.5) 55%,
-        rgba(0,0,0,0.3) 75%,
-        transparent 100%
-    );
-}
         .buttons-container {
             position: relative;
-
             width: 100%;
             height: 200px;
         }
 
         .button {
-            position: absolute;
-
             padding: 18px 42px;
-
             font-size: 28px;
             font-weight: 700;
-
             border: none;
             border-radius: 16px;
-
             cursor: pointer;
-
             background: white;
             color: #ff4f93;
-
-            transition: 0.25s ease;
+            transition: transform 0.25s ease;
+            will-change: transform;
+            min-width: 140px;
+            width: 140px;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         .button:hover {
             transform: scale(1.12);
         }
 
-        /* КНОПКА ДА */
         #yes-button {
-    position: absolute;
+            position: absolute;
+            left: 50%;
+            top: 119%;
+            transform: translateX(-130%);
+            background: #0ddb78;
+            color: white;
+        }
 
-    left: 50%;
-    top: 55%;
+        #yes-button:hover {
+            transform: translateX(-130%) scale(1.12);
+        }
 
-    transform: translate(-130%, 120%);
-    /* ← регулирует положение относительно центра */
-
-    background: #0ddb78;
-    color: white;
-}
-
-        /* КНОПКА НЕТ */
+        /* Кнопка НЕТ — изначально невидима, появится после установки позиции */
         #no-button {
-            left: 55%;
-            top: 69%;
+            position: fixed;
             background: #d41528;
             color: white;
             z-index: 10;
+            transition: transform 0.25s ease,
+                        left 0.45s ease,
+                        top 0.4s ease;
+            opacity: 0;           /* ← скрываем до загрузки */
+            visibility: hidden;   /* ← дополнительно скрываем */
+        }
+
+        /* Класс, который делает кнопку видимой после установки позиции */
+        #no-button.visible {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
-
 <body>
-
     <div class="container">
-
-        <div class="title">
-            Ты пойдешь со мной гулять?
-        </div>
-
+        <div class="title">Ты пойдешь со мной гулять?</div>
         <div class="buttons-container">
-
-            <!-- ДА -->
-            <button class="button"
-                id="yes-button"
-                onclick="location.href='win.html'">
-
-                Да
-
-            </button>
-
-            <!-- НЕТ -->
-            <button class="button" id="no-button">
-
-                Нет
-
-            </button>
-
+            <button class="button" id="yes-button" onclick="location.href='win.html'">Да</button>
+            <button class="button" id="no-button">Нет</button>
         </div>
-
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        (function() {
+            const noBtn = document.getElementById('no-button');
+            const yesBtn = document.getElementById('yes-button');
+            let moveTimeout = null;
+            let isMoving = false;
 
+            // Устанавливаем начальную позицию кнопки "Нет"
+            function setInitialPosition() {
+                const yesRect = yesBtn.getBoundingClientRect();
+
+                // Кнопка "Нет" будет справа от "Да" с отступом 80px
+                const leftPos = yesRect.right + 90;
+                const topPos = yesRect.top;
+
+                noBtn.style.left = leftPos + 'px';
+                noBtn.style.top = topPos + 'px';
+
+                // ПОСЛЕ установки позиции — показываем кнопку
+                noBtn.classList.add('visible');
+            }
+
+            function moveToRandomPosition() {
+                if (isMoving) return;
+                isMoving = true;
+
+                const currentTransform = noBtn.style.transform;
+                noBtn.style.transform = 'none';
+
+                const btnW = noBtn.offsetWidth;
+                const btnH = noBtn.offsetHeight;
+
+                noBtn.style.transform = currentTransform;
+
+                const winW = window.innerWidth;
+                const winH = window.innerHeight;
+
+                let maxX = winW - btnW;
+                let maxY = winH - btnH;
+
+                if (maxX < 0) maxX = 0;
+                if (maxY < 0) maxY = 0;
+
+                let newLeft = Math.random() * maxX;
+                let newTop = Math.random() * maxY;
+
+                newLeft = Math.max(0, Math.min(newLeft, winW - btnW));
+                newTop = Math.max(0, Math.min(newTop, winH - btnH));
+
+                noBtn.style.left = newLeft + 'px';
+                noBtn.style.top = newTop + 'px';
+
+                setTimeout(() => {
+                    isMoving = false;
+                }, 200);
+            }
+
+            // Ждём полной загрузки страницы, потом позиционируем и показываем кнопку
+            window.addEventListener('load', () => {
+                setInitialPosition();
+            });
+
+            // Если страница уже загружена
+            if (document.readyState === 'complete') {
+                setInitialPosition();
+            }
+
+            noBtn.addEventListener('mouseenter', () => {
+                if (moveTimeout) clearTimeout(moveTimeout);
+
+                moveTimeout = setTimeout(() => {
+                    moveToRandomPosition();
+                    moveTimeout = null;
+                }, 80);
+            });
+
+            noBtn.addEventListener('mouseleave', () => {
+                if (moveTimeout) {
+                    clearTimeout(moveTimeout);
+                    moveTimeout = null;
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
