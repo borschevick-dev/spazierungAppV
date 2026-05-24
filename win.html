@@ -2,146 +2,139 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <title>huh?</title>
+<meta charset="UTF-8">
+<title>huh?</title>
 
-    <link rel="stylesheet" href="./styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- ШРИФТ -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<style>
 
-    <style>
+html, body {
+    margin: 0;
+    overflow: hidden;
+}
 
-        html, body {
-            margin: 0;
-            overflow: hidden; /* убирает прокрутку */
-        }
+body {
+    background-image: url("images/foresttt.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
-        body {
-            background-image: url("images/foresttt.jpg");
+    height: 100vh;
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-            min-height: 100vh;
+    font-family: 'Rubik', sans-serif;
+}
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+/* =======================
+   ТЕКСТ (СТАБИЛЬНЫЙ)
+======================= */
 
-            font-family: 'Rubik', sans-serif;
-        }
+.title {
+    --x: -20px;
+    --y: -245px;
 
-        .container {
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
+    color: white;
+    font-size: 77px;
+    font-weight: 700;
 
-        /* ===== ТЕКСТ ===== */
-        .title {
-            position: relative;
+    display: inline-block;
+    padding: 10px 25px;
 
-            --x: -20px;
-            --y: -245px;
+    text-shadow:
+        0 0 8px rgba(255,255,255,0.9),
+        0 0 20px rgba(255,105,180,0.8),
+        0 0 45px rgba(255,0,150,0.6),
+        0 20px 60px rgba(0,0,0,0.6);
 
-            transform: translate(var(--x), var(--y));
+    position: relative;
 
-            color: white;
-            font-size: 77px;
-            font-weight: 700;
+    animation: floatText 4s ease-in-out infinite;
 
-            padding: 10px 25px;
-            display: inline-block;
+    transform: translate(var(--x), var(--y));
+}
 
-            text-shadow:
-                0 0 8px rgba(255,255,255,0.9),
-                0 0 20px rgba(255,105,180,0.8),
-                0 0 45px rgba(255,0,150,0.6),
-                0 20px 60px rgba(0,0,0,0.6);
-        }
+/* ВАЖНО: анимация ТОЛЬКО Y */
+@keyframes floatText {
+    0%, 100% {
+        transform: translate(var(--x), calc(var(--y) + 0px));
+    }
+    50% {
+        transform: translate(var(--x), calc(var(--y) - 10px));
+    }
+}
 
-        /* ===== ЛЕВАЯ КАРТИНКА ===== */
-        .img1 {
-            position: fixed;
+/* =======================
+   КАРТИНКИ
+======================= */
 
-            left: 700px;
-            top: 0;
+.img1, .img2 {
+    position: fixed;
+    bottom: 0;
 
-            width: 1120px;
+    width: min(64vw, 1640px);
+}
 
-            z-index: 5;
+/* ЛЕВАЯ */
+.img1 {
+    left: 0;
 
-            animation: float1 4s ease-in-out infinite;
-        }
+    --x: 650px;
+    --y: 10px;
 
-        /* ===== ПРАВАЯ КАРТИНКА ===== */
-        .img2 {
-            position: fixed;
+    transform: translate(var(--x), var(--y));
 
-            right: 0px;
-            bottom: 350000px;
+    animation: float1 4s ease-in-out infinite;
+}
 
-            width: 1120px;
+/* ПРАВАЯ */
+.img2 {
+    right: 0;
 
-            z-index: 5;
+    --x: -650px;
+    --y: 20px;
 
-            animation: float2 5s ease-in-out infinite;
-        }
+    transform: translate(var(--x), var(--y));
 
-        /* ===== АНИМАЦИИ ===== */
+    animation: float2 5s ease-in-out infinite;
+}
 
-        @keyframes float1 {
-            0% {
-                transform: translateY(0px) rotate(-1deg);
-            }
+/* АНИМАЦИИ — ТОЛЬКО translateY */
 
-            50% {
-                transform: translateY(-10px) rotate(1deg);
-            }
+@keyframes float1 {
+    0%, 100% {
+        transform: translate(var(--x), var(--y)) rotate(-1deg);
+    }
+    50% {
+        transform: translate(var(--x), calc(var(--y) - 10px)) rotate(1deg);
+    }
+}
 
-            100% {
-                transform: translateY(0px) rotate(-1deg);
-            }
-        }
+@keyframes float2 {
+    0%, 100% {
+        transform: translate(var(--x), var(--y)) rotate(1deg);
+    }
+    50% {
+        transform: translate(var(--x), calc(var(--y) - 12px)) rotate(-1deg);
+    }
+}
 
-        @keyframes float2 {
-            0% {
-                transform: translateY(0px) rotate(1deg);
-            }
-
-            50% {
-                transform: translateY(-12px) rotate(-1deg);
-            }
-
-            100% {
-                transform: translateY(0px) rotate(1deg);
-            }
-        }
-
-    </style>
+</style>
 </head>
 
 <body>
 
-    <!-- КАРТИНКИ -->
-    <img src="images/soy1.png" class="img1">
-    <img src="images/soy2.png" class="img2">
+<img src="images/soy1.png" class="img1">
+<img src="images/soy2.png" class="img2">
 
-    <!-- ТЕКСТ -->
-    <div class="container">
-
-        <div class="title">
-            Юхууууууууууууууууууу!!!<br>
-            Новый рекорд по шагам!
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
+<div class="title">
+    Юхууууууууууууууууууу!!!<br>
+    Новый рекорд по шагам!
+</div>
 
 </body>
 </html>
