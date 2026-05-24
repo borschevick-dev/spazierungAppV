@@ -11,15 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+
+        html, body {
+            margin: 0;
+            overflow: hidden; /* убирает прокрутку */
+        }
+
         body {
-            background-image: url("images/foresttt.jpg");
+            background-image: url("images/foresttt.png");
 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
 
-            margin: 0;
             min-height: 100vh;
 
             display: flex;
@@ -32,38 +37,101 @@
         .container {
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
+        /* ===== ТЕКСТ ===== */
         .title {
-    position: relative;
+            position: relative;
 
-    --x: -20px;
-    --y: -245px;
+            --x: -20px;
+            --y: -245px;
 
-    transform: translate(var(--x), var(--y));
+            transform: translate(var(--x), var(--y));
 
-    color: white;
-    font-size: 77px;
-    font-weight: 700;
+            color: white;
+            font-size: 77px;
+            font-weight: 700;
 
-    /* 🧠 КОНТРАСТ ДЛЯ СВЕТЛОГО ФОНА */
-    padding: 10px 25px;
-    display: inline-block;
+            padding: 10px 25px;
+            display: inline-block;
 
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.9),
+                0 0 20px rgba(255,105,180,0.8),
+                0 0 45px rgba(255,0,150,0.6),
+                0 20px 60px rgba(0,0,0,0.6);
+        }
 
-    /* ✨ НЕОН */
-    text-shadow:
-        0 0 8px rgba(255,255,255,0.9),
-        0 0 20px rgba(255,105,180,0.8),
-        0 0 45px rgba(255,0,150,0.6),
-        0 20px 60px rgba(0,0,0,0.6);
-}
+        /* ===== ЛЕВАЯ КАРТИНКА ===== */
+        .img1 {
+            position: fixed;
+
+            left: 700px;
+            top: 0;
+
+            width: 1120px;
+
+            z-index: 5;
+
+            animation: float1 4s ease-in-out infinite;
+        }
+
+        /* ===== ПРАВАЯ КАРТИНКА ===== */
+        .img2 {
+            position: fixed;
+
+            right: 0px;
+            bottom: 350000px;
+
+            width: 1120px;
+
+            z-index: 5;
+
+            animation: float2 5s ease-in-out infinite;
+        }
+
+        /* ===== АНИМАЦИИ ===== */
+
+        @keyframes float1 {
+            0% {
+                transform: translateY(0px) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(-1deg);
+            }
+        }
+
+        @keyframes float2 {
+            0% {
+                transform: translateY(0px) rotate(1deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(-1deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(1deg);
+            }
+        }
+
     </style>
 </head>
 
 <body>
+
+    <!-- КАРТИНКИ -->
     <img src="images/soy1.png" class="img1">
     <img src="images/soy2.png" class="img2">
+
+    <!-- ТЕКСТ -->
     <div class="container">
 
         <div class="title">
