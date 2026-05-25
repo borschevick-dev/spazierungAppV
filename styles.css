@@ -62,7 +62,7 @@ body {
 .next-btn {
     display: inline-block;
 
-    padding: 26px 52px;   /* было меньше → теперь больше */
+    padding: 26px 52px;   /* было меньше ттерь теперь больше */
     font-size: 24px;      /* было 20px */
     font-family: 'Rubik', sans-serif;
     font-weight: 700;
@@ -77,7 +77,7 @@ body {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* более сильный hover */
+/* более сильный ховер */
 .next-btn:hover {
     transform: scale(1.15) translateY(-4px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
@@ -152,32 +152,32 @@ body {
 }
 
 img {
-    /* 📏 РАЗМЕР */
+    /*  РАЗМЕР */
     width: 1000px;
     height: auto;
 
-    /* 📍 КООРДИНАТЫ */
+    /*  КООРДИНАТЫ */
     position: absolute;
     left: 800px;
     top: 77px;
 }
 .img1 {
-    /* 📏 РАЗМЕР */
+    /*  РАЗМЕР */
     width: 1100px;
     height: auto;
 
-    /* 📍 КООРДИНАТЫ */
+    /*  КООРДИНАТЫ */
     position: absolute;
     left: 700px;
     top: 0px;
 }
 
 .img2 {
-    /* 📏 РАЗМЕР */
+    /*  РАЗМЕР */
     width: 1000px;
     height: auto;
 
-    /* 📍 КООРДИНАТЫ */
+    /*  КООРДИНАТЫ */
     position: absolute;
     left: 0px;
     top: 77px;
