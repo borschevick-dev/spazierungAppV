@@ -28,7 +28,6 @@ function updateButton() {
 
     const scrollProgress = (scrollTop + windowHeight) / fullHeight;
 
-    // появляется только в конце (80%+ страницы)
     if (scrollProgress > 0.8) {
         button.classList.add('show');
     } else {
